@@ -1,0 +1,48 @@
+import RestaurantCard from "./RestaurantCard"; 
+import { useState, useEffect } from "react";
+import resList from "../utils/mockData";
+
+const Body = () => {
+
+    const [listOfRestaurants, setlistOfRestaurants] = useState(resList);
+
+    useEffect(() => { 
+      fetchData();
+    }, []);
+
+    const fetchData = async () => {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&collection=83649&tags=layout_CCS_Biryani&sortBy=&filters=&type=rcv2&offset=0&page_type=null"
+      );
+    
+      const jsonValue= await data.json();
+
+      console.log(jsonValue);
+
+      setlistOfRestaurants(jsonValue.data.cards);
+    };
+
+    
+    return (
+        <div className="body">
+            <div className="filter">
+              <button className="filter-btn" 
+                onClick={()=>{
+                  const filterResList=listOfRestaurants.filter(
+                    (res)=>res.data.avgRating>4
+                  );
+                  setlistOfRestaurants(filterResList)
+                  //console.log(setlistOfRestaurants);
+              }}>Top rated Restaurants</button>
+            </div>
+            <div className="res-container">
+              {
+                listOfRestaurants.map(restaurant => 
+                <RestaurantCard key={restaurant.data.id} resData={restaurant}/>)
+              }
+            </div>
+        </div>
+    )
+}
+
+export default Body;

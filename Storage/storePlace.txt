@@ -1,0 +1,14 @@
+/* Img transition 2 */
+.res-container {
+    transition: 1s ease;
+    }
+    
+    .res-container :hover{
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+    transition: 1s ease;
+    }
+
+
+//
