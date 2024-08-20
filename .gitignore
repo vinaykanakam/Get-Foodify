@@ -1,2 +1,5 @@
 /node_modules
 /Notes.js
+
+.parcel-cache/
+dist/

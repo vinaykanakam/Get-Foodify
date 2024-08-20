@@ -29,7 +29,7 @@ const Body = () => {
     };
 
     const OnlineStatus = useOnlineStatus();
-    if(OnlineStatus=== false) return <h1>"Ops! Looks like you are offline"</h1>
+    if(OnlineStatus=== false) return <h1>"Ops! Looks like you are offline, Check your internet connection "</h1>
 
     //Loading screen
     if(listOfRestaurants.length === 0) {
