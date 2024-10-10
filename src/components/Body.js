@@ -1,8 +1,10 @@
 import RestaurantCard from "./RestaurantCard"; 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContex";
+
 
 const Body = () => {
 
@@ -11,7 +13,9 @@ const Body = () => {
 
     const [searchText, setsearchText]= useState([]);
 
-    console.log("body rendered..!");
+    const {loggedInUser, setUserName} = useContext(UserContext);
+
+    console.log("body rendered..!", listOfRestaurants);
 
     useEffect(() => { 
       fetchData();
@@ -26,6 +30,7 @@ const Body = () => {
       //console.log(json);
       setlistOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
       setfilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      
     };
 
     const OnlineStatus = useOnlineStatus();
@@ -35,15 +40,15 @@ const Body = () => {
     if(listOfRestaurants.length === 0) {
       return <Shimmer/>
     };
-
     
     return (
         <div className="body">
-            <div className="filter">
-              <div className="search">
+            <div className="filter flex">
+              <div className="search m-4 p-4">
               <input 
-                type="text" 
-                className="search-box" 
+                type="text"
+                data-testid="searchInput"
+                className="border border-solid border-black" 
                 value={searchText}
                 onChange={(e)=>{
                   setsearchText(e.target.value);
@@ -51,6 +56,7 @@ const Body = () => {
               />
               
               <button
+                className="bg-gray-300 px-2 py-1 m-4 rounded-lg"
                 onClick={()=>{
                   const filteredRestaurant=listOfRestaurants.filter(
                     (res)=>res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -61,7 +67,8 @@ const Body = () => {
                 Search
               </button>
               </div>
-              <button className="filter-btn" 
+              <div className="p-4 m-4 flex items-center">
+              <button className="px-2 py-1 bg-gray-300 rounded-lg" 
                 onClick={()=>{
                   const filteredList=listOfRestaurants.filter(
                     (res)=>res.info.avgRating>4
@@ -69,12 +76,23 @@ const Body = () => {
                   console.log("top restaurants search")
                   console.log(filteredList)
                   setfilteredRestaurant(filteredList)
-                  
 
               }}>Top rated Restaurants</button>
+              </div>
+
+              <div className="search flex m-4 p-4 items-center">
+                <label>UserName : </label>
+                <input className="border border-black p-2"
+                      value={loggedInUser}
+                      onChange={(e)=>{
+                        setUserName(e.target.value);
+                        }}
+                />
+              </div>
+               
             </div>
 
-            <div className="res-container">
+            <div className="flex flex-wrap">
               {
                 filteredRestaurant.map(restaurant => (
                   <Link key={restaurant.info.id} to={"/restaurants/"+ restaurant.info.id}>
