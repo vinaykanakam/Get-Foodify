@@ -1,1 +1,1 @@
-# Namaste-React
+# Get-Foodify-React
