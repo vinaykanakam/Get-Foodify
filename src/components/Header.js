@@ -1,58 +1,53 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import UserContext from "../utils/UserContex";
+import UserContext from "../utils/UserContext";
 import { useSelector } from "react-redux";
+import { HomeIcon, InformationCircleIcon, PhoneIcon, ShoppingCartIcon } from '@heroicons/react/24/solid';
 
-const Header = ()=> {
-
+const Header = () => {
     const [btnNameReact, setbtnNameReact] = useState("Login");
-    const OnlineStatus= useOnlineStatus();
+    const OnlineStatus = useOnlineStatus();
+    const { loggedInUser } = useContext(UserContext);
+    const cartItems = useSelector((store) => store.cart.items);
 
-    const {loggedInUser}= useContext(UserContext);
-    //console.log("Header Render");
-
-    const cartItems= useSelector((store)=>store.cart.items)
-    console.log(cartItems);
-
-    return(
-    <div className="flex justify-between bg-pink-100 shadow-lg lg:bg-pink-50 sm:bg-blue-50">
-        <div className="logo-container">
-            <img className="w-24" src={LOGO_URL} />
-        </div>
-        <div className="flex items-center">
-            <ul className="flex p-4 m-4">
-                <li className="px-4">
-                    Online Status : {OnlineStatus? "🟢" : "🔴"}
-                </li>
-                <li className="px-2">
-                    <Link to="/">Home</Link>
-                </li>
-                <li className="px-2">
-                    <Link to="/about">About Us</Link>
-                </li>
-                <li className="px-2">
-                    <Link to="/contact">Contact Us</Link>
-                </li>
-                <li className="px-2">
-                    <Link to="/grocery">Grocery</Link>
-                </li>
-                <li className="px-4 font-bold text-xl">
-                    <Link to="/cart">Cart- ({cartItems.length} items)</Link>
-                </li> 
-                
-                <button className="login"
-                    onClick={()=>{
-                        btnNameReact==="Login" ? setbtnNameReact("Logout"): setbtnNameReact("Login");
+    return (
+        <div className="sticky top-0 flex justify-between items-center bg-purple-200 h-20 px-6 shadow-lg z-10"> 
+            <div className="flex items-center h-full">
+                <img className="w-20 h-auto" src={LOGO_URL} alt="Logo" /> 
+            </div>
+            <h1 className="text-2xl font-bold text-black text-center flex-grow">Foodify</h1>
+            <div className="flex items-center space-x-6">
+                <ul className="flex items-center space-x-4">
+                    <li className="flex items-center text-black hover:text-gray-600 transition">
+                        <HomeIcon className="h-5 w-5 mr-1" />
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li className="flex items-center text-black hover:text-gray-600 transition">
+                        <InformationCircleIcon className="h-5 w-5 mr-1" />
+                        <Link to="/about">About Us</Link>
+                    </li>
+                    <li className="flex items-center text-black hover:text-gray-600 transition">
+                        <PhoneIcon className="h-5 w-5 mr-1" />
+                        <Link to="/contact">Contact Us</Link>
+                    </li>
+                    <li className="flex items-center text-black hover:text-gray-600 transition">
+                        <ShoppingCartIcon className="h-5 w-5 mr-1" />
+                        <Link to="/cart">Cart - ({cartItems.length} items)</Link>
+                    </li>
+                </ul>
+                <button
+                    className="ml-4 bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-400 transition"
+                    onClick={() => {
+                        btnNameReact === "Login" ? setbtnNameReact("Logout") : setbtnNameReact("Login");
                     }}
-                >{btnNameReact}
+                >
+                    {btnNameReact}
                 </button>
-                <li className="px-2 ">{loggedInUser}</li>
-            </ul>
+            </div>
         </div>
-    </div>
-    )
-}
+    );
+};
 
-export default  Header;
+export default Header;
