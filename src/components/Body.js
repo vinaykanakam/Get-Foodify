@@ -67,7 +67,7 @@ const Body = () => {
               <input 
                 type="text"
                 data-testid="searchInput"
-                className="bg-gray-100 border border-solid border-black px-2 py-1 mr-2  hover:bg-white transition" 
+                className="bg-gray-100 border border-solid border-black px-2 py-1 mr-2 sm:mr-4 sm:px-4 hover:bg-white transition" 
                 value={searchText}
                 onChange={(e)=>{
                   setsearchText(e.target.value);
@@ -120,7 +120,7 @@ const Body = () => {
               </Link>
             ))} 
             </div> */}
-            <div className="flex flex-wrap justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {
             filteredRestaurant.map((restaurant, index) => (
             <Link key={`${restaurant.info.id}-${index}`} to={"/restaurants/"+ restaurant.info.id}>

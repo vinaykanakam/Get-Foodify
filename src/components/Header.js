@@ -13,13 +13,13 @@ const Header = () => {
     const cartItems = useSelector((store) => store.cart.items);
 
     return (
-        <div className="sticky top-0 flex justify-between items-center bg-purple-200 h-20 px-6 shadow-lg z-10"> 
+        <div className="sticky top-0 flex flex-col md:flex-row justify-between items-center bg-purple-200 h-auto md:h-20 px-6 shadow-lg z-10"> 
             <div className="flex items-center h-full">
-                <img className="w-20 h-auto" src={LOGO_URL} alt="Logo" /> 
+                <img className="w-16 h-auto" src={LOGO_URL} alt="Logo" /> 
             </div>
-            <h1 className="text-2xl font-bold text-black text-center flex-grow">Foodify</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-black text-center flex-grow mt-2 md:mt-0">Foodify</h1>
             <div className="flex items-center space-x-6">
-                <ul className="flex items-center space-x-4">
+            <ul className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
                     <li className="flex items-center text-black hover:text-gray-600 transition">
                         <HomeIcon className="h-5 w-5 mr-1" />
                         <Link to="/">Home</Link>

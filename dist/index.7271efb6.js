@@ -27339,12 +27339,12 @@ const Header = ()=>{
     const { loggedInUser } = (0, _react.useContext)((0, _userContextDefault.default));
     const cartItems = (0, _reactRedux.useSelector)((store)=>store.cart.items);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        className: "sticky top-0 flex justify-between items-center bg-purple-200 h-20 px-6 shadow-lg z-10",
+        className: "sticky top-0 flex flex-col md:flex-row justify-between items-center bg-purple-200 h-auto md:h-20 px-6 shadow-lg z-10",
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "flex items-center h-full",
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
-                    className: "w-20 h-auto",
+                    className: "w-16 h-auto",
                     src: (0, _constants.LOGO_URL),
                     alt: "Logo"
                 }, void 0, false, {
@@ -27358,7 +27358,7 @@ const Header = ()=>{
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
-                className: "text-2xl font-bold text-black text-center flex-grow",
+                className: "text-xl md:text-2xl font-bold text-black text-center flex-grow mt-2 md:mt-0",
                 children: "Foodify"
             }, void 0, false, {
                 fileName: "src/components/Header.js",
@@ -27369,7 +27369,7 @@ const Header = ()=>{
                 className: "flex items-center space-x-6",
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
-                        className: "flex items-center space-x-4",
+                        className: "flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4",
                         children: [
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
                                 className: "flex items-center text-black hover:text-gray-600 transition",
@@ -27475,7 +27475,7 @@ const Header = ()=>{
                     }, void 0, true, {
                         fileName: "src/components/Header.js",
                         lineNumber: 22,
-                        columnNumber: 17
+                        columnNumber: 13
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "ml-4 bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-400 transition",
@@ -36659,7 +36659,7 @@ const Body = ()=>{
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                             type: "text",
                             "data-testid": "searchInput",
-                            className: "bg-gray-100 border border-solid border-black px-2 py-1 mr-2  hover:bg-white transition",
+                            className: "bg-gray-100 border border-solid border-black px-2 py-1 mr-2 sm:mr-4 sm:px-4 hover:bg-white transition",
                             value: searchText,
                             onChange: (e)=>{
                                 setsearchText(e.target.value);
@@ -36707,7 +36707,7 @@ const Body = ()=>{
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "flex flex-wrap justify-center",
+                className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4",
                 children: filteredRestaurant.map((restaurant, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                         to: "/restaurants/" + restaurant.info.id,
                         children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
