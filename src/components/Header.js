@@ -22,19 +22,19 @@ const Header = () => {
             <ul className="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4">
                     <li className="flex items-center text-black hover:text-gray-600 transition">
                         <HomeIcon className="h-5 w-5 mr-1" />
-                        <Link to="/">Home</Link>
+                        <Link to="/" className="text-sm md:text-base">Home</Link>
                     </li>
                     <li className="flex items-center text-black hover:text-gray-600 transition">
                         <InformationCircleIcon className="h-5 w-5 mr-1" />
-                        <Link to="/about">About Us</Link>
+                        <Link to="/about" className="text-sm md:text-base">About Us</Link>
                     </li>
                     <li className="flex items-center text-black hover:text-gray-600 transition">
                         <PhoneIcon className="h-5 w-5 mr-1" />
-                        <Link to="/contact">Contact Us</Link>
+                        <Link to="/contact" className="text-sm md:text-base">Contact Us</Link>
                     </li>
                     <li className="flex items-center text-black hover:text-gray-600 transition">
                         <ShoppingCartIcon className="h-5 w-5 mr-1" />
-                        <Link to="/cart">Cart - ({cartItems.length} items)</Link>
+                        <Link to="/cart" className="text-sm md:text-base">Cart - ({cartItems.length} items)</Link>
                     </li>
                 </ul>
                 <button

@@ -27383,6 +27383,7 @@ const Header = ()=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                                         to: "/",
+                                        className: "text-sm md:text-base",
                                         children: "Home"
                                     }, void 0, false, {
                                         fileName: "src/components/Header.js",
@@ -27407,6 +27408,7 @@ const Header = ()=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                                         to: "/about",
+                                        className: "text-sm md:text-base",
                                         children: "About Us"
                                     }, void 0, false, {
                                         fileName: "src/components/Header.js",
@@ -27431,6 +27433,7 @@ const Header = ()=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                                         to: "/contact",
+                                        className: "text-sm md:text-base",
                                         children: "Contact Us"
                                     }, void 0, false, {
                                         fileName: "src/components/Header.js",
@@ -27455,6 +27458,7 @@ const Header = ()=>{
                                     }, undefined),
                                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
                                         to: "/cart",
+                                        className: "text-sm md:text-base",
                                         children: [
                                             "Cart - (",
                                             cartItems.length,
@@ -36611,41 +36615,143 @@ const Body = ()=>{
     const [listOfRestaurants, setlistOfRestaurants] = (0, _react.useState)([]);
     const [filteredRestaurant, setfilteredRestaurant] = (0, _react.useState)([]);
     const [searchText, setsearchText] = (0, _react.useState)("");
-    const { loggedInUser, setUserName } = (0, _react.useContext)((0, _userContextDefault.default));
+    const [corsNeeded, setCorsNeeded] = (0, _react.useState)(false);
+    const [showInstructions, setShowInstructions] = (0, _react.useState)(false); // State for showing instructions
+    //const {loggedInUser, setUserName} = useContext(UserContext);
+    const onlineStatus = (0, _useOnlineStatusDefault.default)();
     console.log("body rendered..!", listOfRestaurants);
     (0, _react.useEffect)(()=>{
         fetchData();
     }, []);
     const fetchData = async ()=>{
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
-        const json = await data.json();
-        // Extract all restaurants from all cards
-        const allRestaurants = json?.data?.cards.flatMap((card)=>card.card?.card?.gridElements?.infoWithStyle?.restaurants || []);
-        // Set both lists
-        setlistOfRestaurants(allRestaurants);
-        setfilteredRestaurant(allRestaurants);
-        console.log("All Restaurants:", allRestaurants);
-    // Log the IDs of filtered restaurants
-    // allRestaurants.forEach(restaurant => {
-    //   console.log(restaurant.info.id);
-    // });
-    // const json= await data.json();
-    // //console.log(json);
-    // setlistOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-    // setfilteredRestaurant(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        try {
+            const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+            const json = await data.json();
+            // Extract all restaurants from all cards
+            const allRestaurants = json?.data?.cards.flatMap((card)=>card.card?.card?.gridElements?.infoWithStyle?.restaurants || []);
+            // Set both lists
+            setlistOfRestaurants(allRestaurants);
+            setfilteredRestaurant(allRestaurants);
+            console.log("All Restaurants:", allRestaurants);
+        } catch (error) {
+            console.error("Error fetching data, likely due to CORS policy: ", error);
+            setCorsNeeded(true); // Show CORS extension page
+        }
     };
-    const OnlineStatus = (0, _useOnlineStatusDefault.default)();
-    if (OnlineStatus === false) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+    // If CORS extension is required, show a message
+    if (corsNeeded) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        className: "flex justify-center py-10",
+        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            className: "flex flex-col items-center bg-gray-100 p-6 rounded-lg shadow-lg",
+            children: [
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
+                    className: "text-2xl font-bold mb-4",
+                    children: "CORS Extension Required"
+                }, void 0, false, {
+                    fileName: "src/components/Body.js",
+                    lineNumber: 55,
+                    columnNumber: 17
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                    className: "mb-4 text-lg text-gray-800",
+                    children: "To access the application, you'll need to enable CORS. Please follow these steps to proceed:"
+                }, void 0, false, {
+                    fileName: "src/components/Body.js",
+                    lineNumber: 56,
+                    columnNumber: 17
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ol", {
+                    className: "mb-4 list-decimal pl-5 text-gray-700",
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                            className: "mb-2",
+                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("a", {
+                                href: "https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf",
+                                target: "_blank",
+                                rel: "noopener noreferrer",
+                                className: "text-blue-500 underline hover:text-blue-700",
+                                children: "Click here to open the CORS Unblock extension page."
+                            }, void 0, false, {
+                                fileName: "src/components/Body.js",
+                                lineNumber: 62,
+                                columnNumber: 25
+                            }, undefined)
+                        }, void 0, false, {
+                            fileName: "src/components/Body.js",
+                            lineNumber: 61,
+                            columnNumber: 21
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                            className: "mb-2",
+                            children: 'Press the "Add to Chrome" button to install the extension.'
+                        }, void 0, false, {
+                            fileName: "src/components/Body.js",
+                            lineNumber: 71,
+                            columnNumber: 21
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                            className: "mb-2",
+                            children: "Once installed, find the extension icon in the upper-right corner of your Chrome browser."
+                        }, void 0, false, {
+                            fileName: "src/components/Body.js",
+                            lineNumber: 72,
+                            columnNumber: 21
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                            className: "mb-2",
+                            children: "Click the icon and toggle the switch to activate the extension."
+                        }, void 0, false, {
+                            fileName: "src/components/Body.js",
+                            lineNumber: 73,
+                            columnNumber: 21
+                        }, undefined),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                            children: "After enabling the extension, click the Retry button to refresh the app."
+                        }, void 0, false, {
+                            fileName: "src/components/Body.js",
+                            lineNumber: 74,
+                            columnNumber: 21
+                        }, undefined)
+                    ]
+                }, void 0, true, {
+                    fileName: "src/components/Body.js",
+                    lineNumber: 60,
+                    columnNumber: 17
+                }, undefined),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    className: "bg-blue-500 text-white px-4 py-2 rounded",
+                    onClick: ()=>{
+                        setCorsNeeded(false); // Reset CORS needed state
+                        fetchData(); // Retry fetching data
+                    },
+                    children: "Retry"
+                }, void 0, false, {
+                    fileName: "src/components/Body.js",
+                    lineNumber: 76,
+                    columnNumber: 17
+                }, undefined)
+            ]
+        }, void 0, true, {
+            fileName: "src/components/Body.js",
+            lineNumber: 54,
+            columnNumber: 13
+        }, undefined)
+    }, void 0, false, {
+        fileName: "src/components/Body.js",
+        lineNumber: 53,
+        columnNumber: 11
+    }, undefined);
+    if (onlineStatus === false) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h1", {
         children: '"Ops! Looks like you are offline, Check your internet connection "'
     }, void 0, false, {
         fileName: "src/components/Body.js",
-        lineNumber: 55,
+        lineNumber: 92,
         columnNumber: 38
     }, undefined);
     //Loading screen
     if (listOfRestaurants.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _shimmerDefault.default), {}, void 0, false, {
         fileName: "src/components/Body.js",
-        lineNumber: 59,
+        lineNumber: 96,
         columnNumber: 14
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -36661,17 +36767,18 @@ const Body = ()=>{
                             "data-testid": "searchInput",
                             className: "bg-gray-100 border border-solid border-black px-2 py-1 mr-2 sm:mr-4 sm:px-4 hover:bg-white transition",
                             value: searchText,
+                            placeholder: "Search",
                             onChange: (e)=>{
                                 setsearchText(e.target.value);
                             }
                         }, void 0, false, {
                             fileName: "src/components/Body.js",
-                            lineNumber: 67,
+                            lineNumber: 104,
                             columnNumber: 15
                         }, undefined)
                     }, void 0, false, {
                         fileName: "src/components/Body.js",
-                        lineNumber: 66,
+                        lineNumber: 103,
                         columnNumber: 15
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -36683,7 +36790,7 @@ const Body = ()=>{
                         children: "Search"
                     }, void 0, false, {
                         fileName: "src/components/Body.js",
-                        lineNumber: 77,
+                        lineNumber: 115,
                         columnNumber: 15
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -36697,44 +36804,51 @@ const Body = ()=>{
                         children: "Top rated Restaurants"
                     }, void 0, false, {
                         fileName: "src/components/Body.js",
-                        lineNumber: 90,
+                        lineNumber: 128,
                         columnNumber: 15
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/Body.js",
-                lineNumber: 64,
+                lineNumber: 101,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4",
-                children: filteredRestaurant.map((restaurant, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                        to: "/restaurants/" + restaurant.info.id,
-                        children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
-                            resData: restaurant
-                        }, void 0, false, {
+                className: "flex flex-col items-center",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                    className: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2",
+                    children: filteredRestaurant.map((restaurant, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                            to: "/restaurants/" + restaurant.info.id,
+                            children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _restaurantCardDefault.default), {
+                                resData: restaurant
+                            }, void 0, false, {
+                                fileName: "src/components/Body.js",
+                                lineNumber: 167,
+                                columnNumber: 15
+                            }, undefined)
+                        }, `${restaurant.info.id}-${index}`, false, {
                             fileName: "src/components/Body.js",
-                            lineNumber: 127,
-                            columnNumber: 13
-                        }, undefined)
-                    }, `${restaurant.info.id}-${index}`, false, {
-                        fileName: "src/components/Body.js",
-                        lineNumber: 126,
-                        columnNumber: 13
-                    }, undefined))
+                            lineNumber: 166,
+                            columnNumber: 15
+                        }, undefined))
+                }, void 0, false, {
+                    fileName: "src/components/Body.js",
+                    lineNumber: 163,
+                    columnNumber: 15
+                }, undefined)
             }, void 0, false, {
                 fileName: "src/components/Body.js",
-                lineNumber: 123,
+                lineNumber: 162,
                 columnNumber: 13
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/Body.js",
-        lineNumber: 63,
+        lineNumber: 100,
         columnNumber: 9
     }, undefined);
 };
-_s(Body, "Yh03nC2yVtBkKPdRcDwokq/wOuo=", false, function() {
+_s(Body, "uGv2ky1iD/CyaAOKb+kfp1j2Wuo=", false, function() {
     return [
         (0, _useOnlineStatusDefault.default)
     ];
